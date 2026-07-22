@@ -25,7 +25,7 @@ namespace DATOS.Repositories
 
             DataTable dt =
             db.ExecuteQuery(
-            "sp_Comuna_Listar",
+            "sp_Comuna_ListarPorRegion",
 
             new SqlParameter(
             "@IdRegion",
@@ -42,11 +42,11 @@ namespace DATOS.Repositories
 
 
                 NombreComuna =
-            x.Field<string>("NombreComuna"),
+            x.Field<string>("Nombre"),
 
 
-                IdRegion =
-            x.Field<int>("IdRegion")
+            //    IdRegion =
+            //x.Field<int>("IdRegion")
 
 
             });

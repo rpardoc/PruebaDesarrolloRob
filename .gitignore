@@ -4,6 +4,7 @@
 *.suo
 *.userosscache
 *.sln.docstates
+Web.config
 
 ## Build results
 bin/

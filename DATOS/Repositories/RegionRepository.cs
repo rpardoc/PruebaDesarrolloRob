@@ -35,7 +35,7 @@ namespace DATOS.Repositories
 
 
                 NombreRegion =
-            x.Field<string>("NombreRegion")
+            x.Field<string>("Nombre")
 
 
             });
@@ -75,7 +75,7 @@ namespace DATOS.Repositories
 
 
                 NombreRegion =
-            row.Field<string>("NombreRegion")
+            row.Field<string>("Nombre")
 
             };
 
