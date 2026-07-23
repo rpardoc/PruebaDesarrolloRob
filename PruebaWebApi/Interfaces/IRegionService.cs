@@ -21,6 +21,7 @@ namespace PruebaWebApi.Interfaces
 
 
         bool ActualizarComuna(
-            ActualizarComunaDTO comuna);
+      int idRegion,
+      ActualizarComunaDTO dto);
     }
 }

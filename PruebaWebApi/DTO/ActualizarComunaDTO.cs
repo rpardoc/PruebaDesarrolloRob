@@ -4,6 +4,8 @@ namespace PruebaWebApi.DTO
     {
         public int IdComuna { get; set; }
 
+        public string NombreComuna { get; set; }
+
         public decimal Superficie { get; set; }
 
         public int Poblacion { get; set; }

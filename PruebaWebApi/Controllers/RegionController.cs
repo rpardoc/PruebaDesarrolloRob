@@ -158,7 +158,9 @@ namespace PruebaWebApi.Controllers
 
 
                 bool resultado =
-                    service.ActualizarComuna(comuna);
+       service.ActualizarComuna(
+           idRegion,
+           comuna);
 
 
                 if (!resultado)

@@ -81,7 +81,7 @@ namespace PruebaWebApi.Services
         {
 
             Comuna comuna =
-                comunaRepository.GetById(idComuna);
+                comunaRepository.GetById(idComuna, idRegion);
 
 
 
@@ -91,47 +91,41 @@ namespace PruebaWebApi.Services
 
 
         public bool ActualizarComuna(
-            ActualizarComunaDTO dto)
+      int idRegion,
+      ActualizarComunaDTO dto)
         {
-
             if (dto == null)
                 return false;
 
 
-
-            Comuna comuna =
-                comunaRepository.GetById(dto.IdComuna);
-
-
+            Comuna comuna = comunaRepository.GetById(idRegion, dto.IdComuna);
 
             if (comuna == null)
                 return false;
 
 
-
-            if (comuna.InformacionAdicional == null)
-            {
-                comuna.InformacionAdicional =
-                    new InformacionAdicional();
-            }
+            if (comuna.IdRegion != idRegion)
+                return false;
 
 
 
-            comuna.InformacionAdicional.Superficie =
-                dto.Superficie;
+            comuna.NombreComuna =
+                dto.NombreComuna;
 
 
-            comuna.InformacionAdicional.Poblacion =
-                dto.Poblacion;
 
+            comuna.InformacionAdicional =
+                new InformacionAdicional
+                {
+                    Superficie = dto.Superficie,
 
-            comuna.InformacionAdicional.Densidad =
-                dto.Densidad;
+                    Poblacion = dto.Poblacion,
 
+                    Densidad = dto.Densidad
+                };
 
 
             return comunaRepository.Update(comuna);
-
         }
 
     }

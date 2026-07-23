@@ -45,8 +45,8 @@ namespace DATOS.Repositories
             x.Field<string>("Nombre"),
 
 
-            //    IdRegion =
-            //x.Field<int>("IdRegion")
+                IdRegion =
+            x.Field<int>("IdRegion")
 
 
             });
@@ -54,7 +54,7 @@ namespace DATOS.Repositories
         }
 
         public Comuna GetById(
-        int idComuna)
+        int idComuna, int idRegion) 
         {
 
             DataTable dt =
@@ -63,7 +63,11 @@ namespace DATOS.Repositories
 
             new SqlParameter(
             "@IdComuna",
-            idComuna));
+            idComuna),
+
+            new SqlParameter(
+            "@IdRegion",
+            idRegion));
 
             if (dt.Rows.Count == 0)
                 return null;
@@ -80,7 +84,7 @@ namespace DATOS.Repositories
 
 
                 NombreComuna =
-            row.Field<string>("NombreComuna"),
+            row.Field<string>("Nombre"),
 
 
                 IdRegion =
@@ -97,73 +101,65 @@ namespace DATOS.Repositories
         }
 
 
-        private InformacionAdicional ConvertirXML(
-        string xml)
+        private InformacionAdicional ConvertirXML(string xml)
         {
+            if (string.IsNullOrEmpty(xml))
+                return new InformacionAdicional();
+
 
             XElement nodo =
-            XElement.Parse(xml);
+                XElement.Parse(xml);
 
 
             return new InformacionAdicional
             {
-
                 Superficie =
-            decimal.Parse(
-            nodo.Element("Superficie").Value),
-
+                    decimal.Parse(nodo.Element("Superficie").Value),
 
                 Poblacion =
-            int.Parse(
-            nodo.Element("Poblacion").Value),
-
+                    int.Parse(nodo.Element("Poblacion").Value),
 
                 Densidad =
-            decimal.Parse(
-            nodo.Element("Densidad").Value)
-
+                    decimal.Parse(nodo.Element("Densidad").Value)
             };
-
         }
 
 
-        public bool Update(
-        Comuna comuna)
+        public bool Update(Comuna comuna)
         {
-
-            string xml =
-
-            $@"<InformacionAdicional>
-            <Superficie>{comuna.InformacionAdicional.Superficie}</Superficie>
-            <Poblacion>{comuna.InformacionAdicional.Poblacion}</Poblacion>
-            <Densidad>{comuna.InformacionAdicional.Densidad}</Densidad>
-            </InformacionAdicional>";
-
-
-
             int resultado =
-            db.ExecuteNonQuery(
+                db.ExecuteNonQuery(
 
-            "sp_Comuna_Actualizar",
+                "SP_Comuna_Actualizar",
 
-            new SqlParameter(
-            "@IdComuna",
-            comuna.IdComuna),
+                new SqlParameter(
+                    "@IdRegion",
+                    comuna.IdRegion),
 
+                new SqlParameter(
+                    "@IdComuna",
+                    comuna.IdComuna),
 
-            new SqlParameter(
-            "@NombreComuna",
-            comuna.NombreComuna),
+                new SqlParameter(
+                    "@Nombre",
+                    comuna.NombreComuna),
 
+                new SqlParameter(
+                    "@Superficie",
+                    comuna.InformacionAdicional.Superficie),
 
-            new SqlParameter(
-            "@InformacionAdicional",
-            xml)
+                new SqlParameter(
+                    "@Poblacion",
+                    comuna.InformacionAdicional.Poblacion),
 
-            );
+                new SqlParameter(
+                    "@Densidad",
+                    comuna.InformacionAdicional.Densidad)
 
-            return resultado > 0;
+                );
 
+            // MERGE con SET NOCOUNT ON puede retornar -1 aun cuando la operación fue exitosa.
+            return resultado > 0 || resultado == -1;
         }
 
     }
