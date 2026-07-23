@@ -3,20 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 
-namespace PruebaWebApi
+namespace PruebaWebMvc
 {
     public static class WebApiConfig
     {
         public static void Register(HttpConfiguration config)
         {
-
-            // Forzar JSON
-            config.Formatters.Remove(
-                config.Formatters.XmlFormatter);
-
-            // Swagger
-            // SwaggerConfig.Register();
-
             // Configuración y servicios de Web API
 
             // Rutas de Web API

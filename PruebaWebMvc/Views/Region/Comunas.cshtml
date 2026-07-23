@@ -1,0 +1,58 @@
+﻿@model IEnumerable<PruebaWebMvc.Dto.ComunaDTO>
+
+
+<h2>Comunas</h2>
+
+<a href="@Url.Action("Index", "Region")"
+   class="btn btn-secondary mb-3">
+    ← Volver a regiones
+</a>
+
+<table class="table table-bordered">
+
+    <tr>
+        <th>Comuna</th>
+        <th>Superficie</th>
+        <th>Población</th>
+        <th>Densidad</th>
+        <th></th>
+    </tr>
+
+
+    @foreach (var item in Model)
+    {
+        <tr>
+
+            <td>
+                @item.NombreComuna
+            </td>
+
+            <td>
+                @item.Superficie
+            </td>
+
+            <td>
+                @item.Poblacion
+            </td>
+
+            <td>
+                @item.Densidad
+            </td>
+
+            <td>
+                <a class="btn btn-primary"
+                   href="@Url.Action(
+           "EditarComuna",
+           "Region",
+           new {
+               idRegion=item.IdRegion,
+               idComuna=item.IdComuna
+           })">
+                    Editar
+                </a>
+            </td>
+
+        </tr>
+    }
+
+</table>

@@ -1,4 +1,5 @@
 <Solution>
   <Project Path="DATOS/DATOS.csproj" Id="e2dcd89f-1cde-47e8-b4ee-2c5acbab2164" />
   <Project Path="PruebaWebApi/PruebaWebApi.csproj" Id="7b13ac14-8972-4f95-8136-660e3d0c4cbf" />
+  <Project Path="PruebaWebMvc/PruebaWebMvc.csproj" Id="444bbad8-820b-4d28-be5b-2ebc9419cdf8" />
 </Solution>

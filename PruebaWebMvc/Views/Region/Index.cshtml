@@ -1,0 +1,47 @@
+﻿@model IEnumerable<PruebaWebMvc.Dto.RegionDTO>
+
+
+<h2>Regiones</h2>
+
+
+<table class="table table-bordered">
+
+    <tr>
+        <th>
+            Región
+        </th>
+
+        <th>
+            Acción
+        </th>
+    </tr>
+
+
+    @foreach (var item in Model)
+    {
+
+        <tr>
+
+            <td>
+                @item.NombreRegion
+            </td>
+
+            <td>
+
+                <a class="btn btn-primary"
+                   href="@Url.Action(
+       "Comunas",
+       "Region",
+       new { idRegion=item.IdRegion })">
+
+                    Ver comunas
+
+                </a>
+
+            </td>
+
+        </tr>
+
+    }
+
+</table>

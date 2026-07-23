@@ -1,0 +1,96 @@
+﻿@model PruebaWebMvc.Dto.ComunaDTO
+
+
+<h2>
+    Editar Comuna
+</h2>
+
+<a href="@Url.Action(
+    "Comunas",
+    "Region",
+    new { idRegion = Model.IdRegion })"
+   class="btn btn-secondary mb-3">
+
+    ← Volver a comunas
+
+</a>
+
+@using (Html.BeginForm())
+{
+
+    @Html.HiddenFor(x => x.IdComuna)
+
+    @Html.HiddenFor(x => x.IdRegion)
+
+
+
+    <div>
+        Nombre
+
+        @Html.TextBoxFor(
+            x => x.NombreComuna,
+            new
+                 {
+                @class = "form-control"
+            })
+
+    </div>
+
+
+
+    <div>
+        Superficie
+
+        @Html.TextBoxFor(
+     x => x.Superficie,
+     new
+     {
+         @class = "form-control",
+         type = "text",
+         step = "0.01"
+     })
+
+    </div>
+
+
+
+    <div>
+        Población
+
+        @Html.TextBoxFor(
+      x => x.Poblacion,
+      new
+      {
+          @class = "form-control",
+          type = "number"
+      })
+
+    </div>
+
+
+
+    <div>
+        Densidad
+
+        @Html.TextBoxFor(
+      x => x.Densidad,
+      new
+      {
+          @class = "form-control",
+          type = "text",
+          step = "0.01"
+      })
+
+    </div>
+
+
+    <br />
+
+    <button type="submit"
+            class="btn btn-success">
+
+        Guardar
+
+    </button>
+
+}

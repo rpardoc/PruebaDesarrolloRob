@@ -9,7 +9,8 @@ namespace DATOS.Interfaces
             int idRegion);
 
         Comuna GetById(
-            int idComuna, int idRegion);
+            int idRegion,
+            int idComuna);
 
         bool Update(
             Comuna comuna);

@@ -20,17 +20,16 @@ namespace DATOS.Repositories
         }
 
         public IEnumerable<Comuna> GetByRegion(
-        int idRegion)
+    int idRegion)
         {
 
             DataTable dt =
-            db.ExecuteQuery(
-            "sp_Comuna_ListarPorRegion",
+                db.ExecuteQuery(
+                    "sp_Comuna_ListarPorRegion",
 
-            new SqlParameter(
-            "@IdRegion",
-            idRegion));
-
+                    new SqlParameter(
+                        "@IdRegion",
+                        idRegion));
 
 
             return dt.AsEnumerable()
@@ -38,66 +37,80 @@ namespace DATOS.Repositories
             {
 
                 IdComuna =
-            x.Field<int>("IdComuna"),
+                    x.Field<int>("IdComuna"),
 
 
                 NombreComuna =
-            x.Field<string>("Nombre"),
+                    x.Field<string>("Nombre"),
 
 
                 IdRegion =
-            x.Field<int>("IdRegion")
+                    x.Field<int>("IdRegion"),
 
+
+                InformacionAdicional =
+                    new InformacionAdicional
+                    {
+
+                        Superficie =
+                            x.Field<decimal>("Superficie"),
+
+
+                        Poblacion =
+                            x.Field<int>("Poblacion"),
+
+
+                        Densidad =
+                            x.Field<decimal>("Densidad")
+
+                    }
 
             });
 
         }
 
         public Comuna GetById(
-        int idComuna, int idRegion) 
+     int idRegion,
+     int idComuna)
         {
 
             DataTable dt =
-            db.ExecuteQuery(
-            "sp_Comuna_Obtener",
+                db.ExecuteQuery(
+                    "sp_Comuna_Obtener",
 
-            new SqlParameter(
-            "@IdComuna",
-            idComuna),
+                    new SqlParameter(
+                        "@IdRegion",
+                        idRegion),
 
-            new SqlParameter(
-            "@IdRegion",
-            idRegion));
+                    new SqlParameter(
+                        "@IdComuna",
+                        idComuna));
+
 
             if (dt.Rows.Count == 0)
                 return null;
 
 
             DataRow row =
-            dt.Rows[0];
+                dt.Rows[0];
+
 
             return new Comuna
             {
-
                 IdComuna =
-            row.Field<int>("IdComuna"),
-
+                    row.Field<int>("IdComuna"),
 
                 NombreComuna =
-            row.Field<string>("Nombre"),
-
+                    row.Field<string>("Nombre"),
 
                 IdRegion =
-            row.Field<int>("IdRegion"),
-
+                    row.Field<int>("IdRegion"),
 
                 InformacionAdicional =
-            ConvertirXML(
-            row["InformacionAdicional"]
-            .ToString())
-
+                    ConvertirXML(
+                        row["InformacionAdicional"]
+                        .ToString())
             };
-
         }
 
 
@@ -127,6 +140,7 @@ namespace DATOS.Repositories
 
         public bool Update(Comuna comuna)
         {
+           
             int resultado =
                 db.ExecuteNonQuery(
 
@@ -146,7 +160,12 @@ namespace DATOS.Repositories
 
                 new SqlParameter(
                     "@Superficie",
-                    comuna.InformacionAdicional.Superficie),
+                    SqlDbType.Decimal)
+                {
+                    Precision = 10,
+                    Scale = 2,
+                    Value = comuna.InformacionAdicional.Superficie
+                },
 
                 new SqlParameter(
                     "@Poblacion",
@@ -154,11 +173,17 @@ namespace DATOS.Repositories
 
                 new SqlParameter(
                     "@Densidad",
-                    comuna.InformacionAdicional.Densidad)
+                    SqlDbType.Decimal)
+                {
+                    Precision = 10,
+                    Scale = 2,
+                    Value = comuna.InformacionAdicional.Densidad
+                }
 
                 );
 
-            // MERGE con SET NOCOUNT ON puede retornar -1 aun cuando la operación fue exitosa.
+
+            // MERGE con SET NOCOUNT ON puede retornar -1 aun cuando fue exitoso.
             return resultado > 0 || resultado == -1;
         }
 

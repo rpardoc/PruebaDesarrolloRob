@@ -81,7 +81,9 @@ namespace PruebaWebApi.Services
         {
 
             Comuna comuna =
-                comunaRepository.GetById(idComuna, idRegion);
+                comunaRepository.GetById(
+                    idRegion,
+                    idComuna);
 
 
 

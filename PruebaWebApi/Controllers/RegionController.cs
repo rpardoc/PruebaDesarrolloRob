@@ -132,6 +132,47 @@ namespace PruebaWebApi.Controllers
             }
         }
 
+        // GET api/region/1/comuna/2
+
+        [HttpGet]
+        [Route("{idRegion:int}/comuna/{idComuna:int}")]
+        public IHttpActionResult GetComuna(
+            int idRegion,
+            int idComuna)
+        {
+            try
+            {
+                log.Info(
+                    $"Consultando comuna. Región: {idRegion}, Comuna: {idComuna}");
+
+
+                var comuna =
+                    service.ObtenerComuna(
+                        idRegion,
+                        idComuna);
+
+
+                if (comuna == null)
+                {
+                    log.Warn(
+                        $"No existe comuna {idComuna} en región {idRegion}");
+
+                    return NotFound();
+                }
+
+
+                return Ok(comuna);
+
+            }
+            catch (Exception ex)
+            {
+                log.Error(
+                    "Error consultando comuna",
+                    ex);
+
+                return InternalServerError();
+            }
+        }
 
 
         // POST api/region/1/comuna
